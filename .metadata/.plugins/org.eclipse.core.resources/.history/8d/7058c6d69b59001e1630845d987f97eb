@@ -1,0 +1,36 @@
+package com.elhg.loopsII;
+
+import java.util.Scanner;
+
+public class Solucion {
+	 public static void main(String []argh){
+	        Scanner in = new Scanner(System.in);
+	        
+	        int t=in.nextInt();
+	        String[] arrayResults = new String[t];
+	        for(int i=0;i<t;i++){
+	            int a = 0;//in.nextInt();
+	            int b = 2;//in.nextInt();
+	            int n = 10;//in.nextInt();
+	            
+	            int miembro = 0;
+	            for(int j=0; j<n; j++){
+	                miembro = miembro +(a +potencia(2,j)*b); 
+	                arrayResults[i] = arrayResults[i] +(""+ miembro);
+	                System.out.println(arrayResults[i]);
+	            }
+	        }
+	        in.close();
+	    }
+	    
+	    private static int potencia( int base, int exponente){
+	        int response = 1;
+	        if(exponente!=0){
+	            response =0;
+	            for(int i=1; i<=exponente ; i++){
+	                response = response + (base*base);
+	            }
+	        }
+	        return response;
+	    }
+}
