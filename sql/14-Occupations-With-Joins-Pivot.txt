@@ -1,0 +1,38 @@
+Pivot the Occupation column in OCCUPATIONS so that each Name is sorted alphabetically and displayed underneath its corresponding Occupation. 
+The output column headers should be Doctor, Professor, Singer, and Actor, respectively.
+
+Note Print NULL when there are no more names corresponding to an occupation.
+
+Explanation
+
+The first column is an alphabetically ordered list of Doctor names.
+The second column is an alphabetically ordered list of Professor names.
+The third column is an alphabetically ordered list of Singer names.
+The fourth column is an alphabetically ordered list of Actor names.
+The empty cell data for columns with less than the maximum number of names per occupation (in this case, the Professor and Actor columns) are filled with NULL values.
+
+
+------------------------------------------------------------------------------------------------------------------------------------------
+WITH 
+D AS (SELECT ROW_NUMBER() OVER (ORDER BY NAME) AS ROWNUMBER, NAME FROM OCCUPATIONS WHERE OCCUPATION = 'Doctor'),
+P AS (SELECT ROW_NUMBER() OVER (ORDER BY NAME) AS ROWNUMBER, NAME FROM OCCUPATIONS WHERE OCCUPATION = 'Professor'),
+S AS (SELECT  ROW_NUMBER() OVER (ORDER BY NAME) AS ROWNUMBER, NAME FROM OCCUPATIONS WHERE OCCUPATION = 'Singer'),
+A AS (SELECT  ROW_NUMBER() OVER (ORDER BY NAME) AS ROWNUMBER, NAME FROM OCCUPATIONS WHERE OCCUPATION = 'Actor')
+SELECT D.NAME, P.NAME, S.NAME, A.NAME
+    FROM D RIGHT JOIN P ON D.ROWNUMBER = P.ROWNUMBER
+           LEFT JOIN S ON P.ROWNUMBER = S.ROWNUMBER 
+           LEFT JOIN A ON P.ROWNUMBER = A.ROWNUMBER;
+
+-- TODOS LOS PROFESORES AUNQUE NO HAYA DOCTORES
+-- TODOS LOS PROFESORES AUNQUE NO HAYA SINGER
+-- TODOS LOS PROFESORES AUNQUE NO HAYA ACTORES
+-- PROFESORES SON LOS QUE EXISTEN MAS, COUNT =7
+------------------------------------------------------------------------------------------------------------------------------------------
+EXPECTED OUTPUT
+Aamina Ashley Christeen Eve 
+Julia Belvet Jane Jennifer 
+Priya Britney Jenny Ketty 
+NULL Maria Kristeen Samantha 
+NULL Meera NULL NULL 
+NULL Naomi NULL NULL 
+NULL Priyanka NULL NULL
